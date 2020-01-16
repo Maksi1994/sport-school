@@ -1,12 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Team;
+use App\{Team, Player};
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\Builder;
 use App\Http\Resources\Teams\{TeamResource, TeamsCollection};
-use App\Http\Resources\Playrs\{PlayersCollection};
+use App\Http\Resources\Players\{PlayersCollection};
 
 class TeamsController extends Controller
 {
@@ -41,7 +40,7 @@ class TeamsController extends Controller
     }
 
     public function getTeamPlayers(Request $request) {
-      $players = Players::whereHas('currTeam', function($q) use ($request) {
+      $players = Player::whereHas('currTeam', function($q) use ($request) {
         $q->where('team_id', $request->id);
       })->get();
 

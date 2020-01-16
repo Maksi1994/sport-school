@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources\Teams;
+namespace App\Http\Resources\Favorites;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class TeamsCollection extends ResourceCollection
+class FavoritesCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.

@@ -27,6 +27,15 @@ class Player extends Model
         return $this->hasMany(PlayerGameStats::class, 'player_id');
     }
 
+    public function images()
+    {
+        return $this->morphToMany(Image::class, 'imageable');
+    }
+
+    public function favorites() {
+        return $this->morphMany(Favorite::class, 'favoriable');
+    }
+
     public function scopeGetStats($q, $field) {
       $q->whereHas('gamesStats', function($q) use($field) {
          $q->where($field, '>', 0);

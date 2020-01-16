@@ -10,11 +10,15 @@ use Illuminate\Support\Facades\Validator;
 class GamesController extends Controller
 {
     public function save(Request $request) {
-        $validation = Validator::make($request->all(), [
+
+        var_dump(json_decode($request->data, true));
+        exit;
+
+        $validation = Validator::make(json_decode($request->data, true), [
             'team_id' => 'required|exists:teams,id',
             'opponent_id' => 'required|exists:teams,id',
             'team_goalds' => 'required|numeric',
-            'opponen_goals' => 'required|numeric',
+            'opponent_goals' => 'required|numeric',
             'stats' => 'required|array',
             'stats.*.player_id' => 'required|exists:players,id',
             'stats.*.team_id' => 'required|exists:teams,id',
@@ -27,7 +31,8 @@ class GamesController extends Controller
 
         if (!$validation->fails()) {
             $success = false;
-            Game::saveGame($request);
+
+            Game::saveGame(json_decode($request->data, true), $request->files);
         }
 
         return $this->success($success);

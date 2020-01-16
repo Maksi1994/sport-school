@@ -49,3 +49,20 @@ Route::group([
 ], function() {
   Route::get('get-players-stats/{field}', 'StatsController@getPlayersStats');
 });
+
+Route::group([
+    'prefix' => 'users',
+], function() {
+    Route::post('registrate', 'UsersController@registrate');
+    Route::get('accept-registration/{token}', 'UsersController@acceptRegistration');
+    Route::post('login', 'UsersController@login');
+    Route::get('logout', 'UsersController@logout')->middleware('auth:api');
+});
+
+Route::group([
+    'prefix' => 'favorites',
+    'middleware' => 'auth:api'
+], function() {
+    Route::post('toggle', 'FavoritesController@toggle');
+    Route::get('get-all', 'FavoritesController@getAll');
+});
